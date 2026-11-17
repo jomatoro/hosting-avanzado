@@ -1,0 +1,56 @@
+services:
+  centos9:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.centos9
+    container_name: lab-apache-centos9
+    hostname: centos9-apache
+    privileged: true
+    cgroup: host
+    tmpfs:
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+      - .:/labs:rw
+    ports:
+      - "8081:80"
+      - "8441:443"
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    networks:
+      apache_lab_net:
+        ipv4_address: 192.168.56.10
+
+  debian13:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.debian13
+    container_name: lab-apache-debian13
+    hostname: debian13-apache
+    privileged: true
+    cgroup: host
+    tmpfs:
+      - /run
+      - /run/lock
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+      - .:/labs:rw
+    ports:
+      - "8082:80"
+      - "8442:443"
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    networks:
+      apache_lab_net:
+        ipv4_address: 192.168.56.20
+
+networks:
+  apache_lab_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.56.0/24
+
