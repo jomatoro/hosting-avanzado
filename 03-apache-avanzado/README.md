@@ -244,8 +244,8 @@ curl -k -X TRACE -I https://hosting-avanzado.intranet/
 
 * **En CentOS 9:**
   ```bash
-  dnf install -y epel-release
-  dnf install -y mod_evasive
+  dnf install https://pkgs.sysadmins.ws/el9/base/x86_64/raven-release.el9.noarch.rpm
+  dnf --enablerepo=raven-modular install -y mod_evasive
   ```
   Editar `/etc/httpd/conf.d/mod_evasive.conf`:
   ```apache
